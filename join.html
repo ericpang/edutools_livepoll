@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Join · Live Poll</title>
+  <meta name="description" content="Answer the live class poll.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/join.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="join.html"><img src="assets/favicon.svg" alt="">Live Poll</a>
+    <button id="theme-toggle" class="icon-btn" type="button"></button>
+  </header>
+
+  <div id="config-banner" class="banner" hidden>
+    Firebase isn't configured yet. Add your project's config to <code>js/firebase-config.js</code>.
+  </div>
+
+  <main class="join">
+    <section id="enter-code" class="card" hidden>
+      <h1>Join a poll</h1>
+      <form id="code-form">
+        <label>Poll code
+          <input id="code-input" maxlength="6" required autocomplete="off" autocapitalize="characters"
+                 inputmode="text" placeholder="ABC123">
+        </label>
+        <button class="btn primary big" type="submit">Join</button>
+      </form>
+    </section>
+
+    <section id="session" hidden>
+      <div class="card">
+        <p class="eyebrow"><span id="poll-title"></span> · <span id="q-counter"></span></p>
+        <h1 id="q-text"></h1>
+        <p id="q-hint" class="field-label"></p>
+        <form id="answer-form" novalidate>
+          <div id="answer-area"></div>
+          <button id="submit-btn" class="btn primary big" type="submit">Submit</button>
+        </form>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+        <p id="verdict" class="verdict" role="status" aria-live="polite" hidden></p>
+      </div>
+
+      <div id="results-section" class="card join-results" hidden>
+        <h2 class="section-title">Results</h2>
+        <div id="results" class="results"></div>
+      </div>
+    </section>
+
+    <section id="message" class="card center" hidden>
+      <div id="message-emoji" class="message-emoji"></div>
+      <h1 id="message-title"></h1>
+      <p id="message-body" class="muted"></p>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

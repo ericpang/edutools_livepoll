@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Poll</title>
+  <meta name="description" content="A real-time poll your class answers from their phones.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <script>try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <script type="module" src="js/present.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./"><img src="assets/favicon.svg" alt="">Live Poll</a>
+    <div class="topbar-actions">
+      <span id="join-pill" class="join-pill" hidden>Join with code <strong id="pill-code"></strong></span>
+      <button id="theme-toggle" class="icon-btn" type="button"></button>
+    </div>
+  </header>
+
+  <div id="config-banner" class="banner" hidden>
+    Firebase isn't configured yet. Add your project's config to <code>js/firebase-config.js</code>.
+    See the README's <em>Setup</em> section for instructions.
+  </div>
+
+  <section id="setup" class="setup card" hidden>
+    <h1>Start a poll</h1>
+    <form id="setup-form" novalidate>
+      <label>Poll title
+        <input id="title-input" maxlength="200" autocomplete="off" placeholder="Photosynthesis check-in">
+      </label>
+
+      <p class="eyebrow">Questions</p>
+      <ol id="questions-list" class="questions-list"></ol>
+      <button id="add-question" class="btn small" type="button">＋ Add question</button>
+
+      <button id="start-btn" class="btn primary" type="submit">Start poll</button>
+    </form>
+    <p id="resume" class="muted" hidden>Or resume your last poll: <a id="resume-link" href="#"></a></p>
+    <p class="muted">Joining as a participant? <a href="join.html">Enter a code</a></p>
+  </section>
+
+  <main id="poll" class="board" hidden>
+    <section class="stage">
+      <div class="stage-head">
+        <p class="eyebrow"><span id="q-counter"></span> · <span id="q-type"></span></p>
+        <div class="badges">
+          <span id="closed-badge" class="badge" hidden>🔒 Voting closed</span>
+          <span id="shared-badge" class="badge info" hidden>📱 Results shared to phones</span>
+        </div>
+      </div>
+      <h1 id="q-text" class="title"></h1>
+      <div class="results-wrap">
+        <div id="results" class="results"></div>
+      </div>
+      <div class="stage-foot">
+        <button id="prev-btn" class="btn" type="button">← Previous</button>
+        <p class="answer-count"><strong id="answer-count">0</strong> <span id="answer-label">answers</span></p>
+        <button id="next-btn" class="btn primary" type="button">Next →</button>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <div id="qr-panel" class="card qr-panel">
+        <p class="eyebrow">Scan to join</p>
+        <div id="qr" class="qr"></div>
+        <p id="join-url" class="join-url"></p>
+        <p class="code">Code <strong id="code"></strong></p>
+      </div>
+
+      <div class="card stats">
+        <div><span id="stat-answers">0</span><small>answers</small></div>
+        <div><span id="stat-people">0</span><small>participants</small></div>
+        <div><span id="stat-correct">–</span><small>correct</small></div>
+      </div>
+
+      <div id="controls" class="card controls">
+        <button id="open-btn" class="btn" type="button">🔒 Close voting</button>
+        <button id="show-btn" class="btn" type="button">🙈 Hide results</button>
+        <button id="share-btn" class="btn" type="button">📱 Share results</button>
+        <button id="reveal-btn" class="btn" type="button">✓ Reveal answer</button>
+        <button id="reset-btn" class="btn danger" type="button">↺ Reset</button>
+        <button id="qr-btn" class="btn" type="button">Hide QR</button>
+        <button id="fullscreen-btn" class="btn" type="button">⛶ Fullscreen</button>
+        <button id="csv-btn" class="btn" type="button">⬇ CSV</button>
+        <a class="btn wide-span" href="./">＋ New poll</a>
+      </div>
+
+      <details class="card question-nav" open>
+        <summary>Questions</summary>
+        <ol id="question-nav" class="question-nav-list"></ol>
+      </details>
+
+      <p id="hint" class="hint muted">Use ← and → to move between questions.</p>
+    </aside>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
